@@ -5,11 +5,9 @@ import java.util.Scanner;
 
 public class TripSearch {
 
-	// need to acccount for errors and arrival times that are not possible
-
 	TripSearch(ArrayList<String> arrivalTimes, ArrayList<String> tripStrings, ArrayList<Integer> tripID) {
 
-		
+
 
 		Scanner scanner;
 		try {
@@ -25,7 +23,7 @@ public class TripSearch {
 		}
 
 		// forms an arrayList of only arrival_times
-		
+
 
 		for(int y = 0; y<tripStrings.size(); y++) {
 			String s = tripStrings.get(y);
@@ -37,17 +35,10 @@ public class TripSearch {
 			else {
 				tripID.add(Integer.parseInt(currentTripArray[0]));	
 			}
-			
 		}
-		
 	}
+
 	
-
-	public int numberOfArrivalTimes(int index) {
-		
-		return index;
-	}
-
 	public boolean doesTripExist(String userInput, ArrayList<String> arrivalTimes, ArrayList<String> tripStrings, 
 			ArrayList<String> arrivalsStrings, ArrayList<Integer> correctIds, ArrayList<Integer> tripId, ArrayList<Integer> correctIdIndex){
 		boolean correct = false;
@@ -59,19 +50,20 @@ public class TripSearch {
 				correctIds.add(tripId.get(i));
 				correctIdIndex.add(i);
 				correct = true;
-				
+
 			}
 		}
 		if(correct == true) {
-		
+
 			return true;
 		}
 		return false;
 	}
+
 	
 	public void printOrganisedStrings(ArrayList<Integer> correctIdIndex,
 			ArrayList<String> tripStrings){
-		
+
 		for(int i = 0; i < correctIdIndex.size(); i++) {
 			for(int t = 0; t < tripStrings.size(); t++) {
 				if(correctIdIndex.get(i) == t) {
@@ -79,18 +71,19 @@ public class TripSearch {
 				}
 			}
 		}
-		
+
 	}
 
+	
 	static ArrayList<Integer> insertionSort (ArrayList<Integer> correctIds, ArrayList<Integer> correctIdIndex){
 
 		ArrayList<Integer> returnArray = new ArrayList<Integer>();
 		int[] tempA = new int[correctIds.size()];
-		
+
 		for(int t=0; t<tempA.length; t++) {
 			tempA[t] = correctIds.get(t);
 		}
-		
+
 		int[] tempIndexA =  new int[correctIds.size()];
 		for(int t=0; t<tempA.length; t++) {
 			tempIndexA[t] = correctIdIndex.get(t);
@@ -111,15 +104,13 @@ public class TripSearch {
 				}
 			}
 		}
-		
+
 		for(int t = 0; t<tempIndexA.length; t++) {
 			returnArray.add(tempIndexA[t]);
 		}
-		 
+
 		return returnArray;
 	}
-	
-	
 
 
 
@@ -130,32 +121,51 @@ public class TripSearch {
 		ArrayList<Integer> correctIdIndex = new ArrayList<Integer>();
 		ArrayList<Integer> correctIds = new ArrayList<Integer>();
 		ArrayList<Integer> tripID = new ArrayList<Integer>();
-		
+
 		TripSearch ts = new TripSearch(arrivalTimes, tripStrings, tripID);
 
 		Scanner input = new Scanner(System.in);
 		System.out.print("Enter an arrival time in the form hh:mm:ss  : ");
 		String userInput = input.next();
-		System.out.println("Arrival Time entered: " + userInput);
-		
-		boolean check = ts.doesTripExist(userInput, arrivalTimes,  tripStrings, arrivalsStrings, 
-				 correctIds, tripID, correctIdIndex);
-		if (check == true) {
-			System.out.println("Arrival Time Exists!");
+		if(!userInput.contains(":")) {
+			System.out.print("Invalid Input Entered.");
 		}
 		else {
-			System.out.println("Arrival Time DOES NOT Exist!");
-		}
-		
-		correctIdIndex = ts.insertionSort(correctIds, correctIdIndex);
-		ts.printOrganisedStrings(correctIdIndex, tripStrings);
-		
-		System.out.print("The End.");
-		
-		// need to acccount for errors and arrival times that are not possible
-		
-	
-	}
+			String[] timeCheck = userInput.split(":");
+			try {
+				Integer.parseInt(timeCheck[0]);
+				Integer.parseInt(timeCheck[1]);
+				Integer.parseInt(timeCheck[2]);
 
+				if ((Integer.parseInt(timeCheck[0]) > 23) || (Integer.parseInt(timeCheck[1]) > 59)
+						|| (Integer.parseInt(timeCheck[2]) > 59) || (timeCheck[0].length() > 2) || (timeCheck.length > 3) 
+						|| (userInput.toCharArray().length > 8 ) || (userInput.toCharArray().length < 7 )) {
+					System.out.print("Invalid Input Entered");
+				}
+				else {
+
+					System.out.println("Arrival Time entered: " + userInput);
+
+					boolean check = ts.doesTripExist(userInput, arrivalTimes,  tripStrings, arrivalsStrings, 
+							correctIds, tripID, correctIdIndex);
+					if (check == true) {
+						System.out.println("Arrival Time Exists!");
+					}
+					else {
+						System.out.println("Arrival Time DOES NOT Exist - No buses arrive at the time entered.");
+					}
+
+					correctIdIndex = ts.insertionSort(correctIds, correctIdIndex);
+					ts.printOrganisedStrings(correctIdIndex, tripStrings);
+
+					System.out.print("The End.");
+				}
+			}
+			catch (NumberFormatException e) {
+				System.out.println("Invalid Input Entered.");
+			}
+
+		}
+	}
 
 } 
