@@ -1,3 +1,8 @@
 /ShortestPath.class
 /BusStopSearch.class
 /TripSearch.class
+/TST.class
+/TST$Node.class
+/Queue.class
+/Queue$LinkedIterator.class
+/Queue$Node.class

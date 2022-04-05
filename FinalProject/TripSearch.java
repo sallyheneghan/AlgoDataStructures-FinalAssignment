@@ -113,7 +113,7 @@ public class TripSearch {
 	}
 
 
-
+/*
 	public static void main(String[] args) {
 		ArrayList<String> arrivalTimes = new ArrayList<String>();
 		ArrayList<String> tripStrings = new ArrayList<String>();
@@ -167,5 +167,6 @@ public class TripSearch {
 
 		}
 	}
+	*/
 
 } 
