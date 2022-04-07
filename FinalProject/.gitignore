@@ -7,3 +7,14 @@
 /Queue$LinkedIterator.class
 /Queue$Node.class
 /StdIn.class
+/DijkstraSP.class
+/DirectedEdge.class
+/EdgeWeightedDigraph.class
+/Bag.class
+/IndexMinPQ.class
+/IndexMinPQ$HeapIterator.class
+/Bag$LinkedIterator.class
+/Bag$Node.class
+/In.class
+/AdjMatrixEdgeWeightedDigraph.class
+/AdjMatrixEdgeWeightedDigraph$AdjIterator.class
