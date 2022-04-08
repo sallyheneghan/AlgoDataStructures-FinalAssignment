@@ -184,8 +184,8 @@ public class EdgeWeightedDigraph {
     public void addEdge(DirectedEdge e) {
         int v = e.from();
         int w = e.to();
-        validateVertex(v);
-        validateVertex(w);
+        //validateVertex(v);
+        //validateVertex(w);
         adj[v].add(e);
         indegree[w]++;
         E++;
@@ -226,7 +226,7 @@ public class EdgeWeightedDigraph {
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public int indegree(int v) {
-        validateVertex(v);
+        //validateVertex(v);
         return indegree[v];
     }
 
