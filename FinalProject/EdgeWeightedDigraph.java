@@ -101,7 +101,8 @@ public class EdgeWeightedDigraph {
      * @throws IllegalArgumentException if the endpoints of any edge are not in prescribed range
      * @throws IllegalArgumentException if the number of vertices or edges is negative
      */
-    public EdgeWeightedDigraph(In in) {
+    /*
+    //public EdgeWeightedDigraph(In in) {
         if (in == null) throw new IllegalArgumentException("argument is null");
         try {
             this.V = in.readInt();
@@ -127,6 +128,7 @@ public class EdgeWeightedDigraph {
             throw new IllegalArgumentException("invalid input format in EdgeWeightedDigraph constructor", e);
         }
     }
+    8/
 
     /**
      * Initializes a new edge-weighted digraph that is a deep copy of {@code G}.

@@ -6,11 +6,9 @@ import java.util.Scanner;
 public class ShortestPath {
 
 
-	ShortestPath(int start, int destination) {
+	ShortestPath(int start, int destination, ArrayList<String> stops, ArrayList<String> names, ArrayList<Integer> idList) {
 		//decision doc why Dijkstra? - as all costs are positive
 		// floud warshall - only if you need everywhere to everywhere - as we are entering two specific stops, FW is not optimal
-
-		ArrayList<String> stops = new ArrayList<String>();
 
 		int n = -1;
 
@@ -29,16 +27,40 @@ public class ShortestPath {
 		}
 
 
-
-		ArrayList<Integer> idList = new ArrayList<Integer>();
-		ArrayList<String> names = new ArrayList<String>();
 		for(int i = 1, j=0; i < stops.size(); i++, j++) {
 			String[] str = stops.get(i).split(",");
 			idList.add(Integer.parseInt(str[0]));
 			names.add(str[2]);
 
 		}
+		
 
+	}
+	
+	public boolean doStopsExist(int start, int destination, ArrayList<Integer> idList) {
+		
+		if(idList.contains(start)) {
+			System.out.println("Start bus stop exists.");
+		}
+		else {
+			System.out.println("Start bus stop does not exist.");
+			return false;
+		}
+		
+		if(idList.contains(destination)) {
+			System.out.println("Destination bus stop exists.");
+		}
+		else {
+			System.out.println("Destination bus stop does not exist.");
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public void pathFinder(int start, int destination, ArrayList<String> stops, ArrayList<String> names, ArrayList<Integer> idList) {
+		
+		Scanner scanner;
 		ArrayList<String> tripTransfers = new ArrayList<String>();
 
 		try {
@@ -81,7 +103,6 @@ public class ShortestPath {
 			for(int k = 0; k<idList.size(); k++) {
 				if(Integer.parseInt(str[0]) == idList.get(k)) {
 					stopA[j] = k;
-					//System.out.print(stopA[j]);
 				}
 				if(Integer.parseInt(str[1]) == idList.get(k)) {
 					stopB[j] = k;
@@ -97,21 +118,6 @@ public class ShortestPath {
 				cost[j] = Integer.parseInt(str[3])/100;
 			}
 		}
-
-		/*
-		ArrayList<String> stopTransfers = new ArrayList<String>();
-
-		try {
-			File file = new File("stop_times.txt");
-			scanner = new Scanner(file);
-			while(scanner.hasNextLine()) {
-				stopTransfers.add(scanner.nextLine());
-			}
-		}
-		catch (FileNotFoundException e) {
-			System.out.print("File Not Found.");
-		}
-		*/
 
 		int k = tripTransfers.size()-1;
 
@@ -134,8 +140,6 @@ public class ShortestPath {
 
 				}
 
-				//System.out.println("StopA[k]: " + stopA[k]);
-				//stopB[k] = b;
 				cost[k] = 1;
 				k++;
 			}
@@ -146,8 +150,9 @@ public class ShortestPath {
 
 
 		int E = stopA.length;
+		
+		int n = stops.size() -1;
 
-		System.out.println("Number of stops: " + n);
 		EdgeWeightedDigraph G = new EdgeWeightedDigraph(n);
 
 		for (int i = 0; i < E; i++) {
@@ -161,7 +166,6 @@ public class ShortestPath {
 		int d = 0;
 
 
-
 		for(int i = 0; i<idList.size(); i++) {
 			if(idList.get(i) == start) {
 				s = i;
@@ -172,16 +176,11 @@ public class ShortestPath {
 			}
 		}
 
-
-		System.out.println("Source stop id: " + s);
-		System.out.println("Destination stop id: " + d);
-
 		DijkstraSP sp = new DijkstraSP(G, s);
 
-		//for (int t = 0; t < G.V(); t++) {
 		if (sp.hasPathTo(d)) {
 			System.out.printf("%d to %d (%.2f)  ", start, destination, sp.distTo(d));
-			//Change so that actual edges (not edge indexes) are printed. 
+			
 			for (DirectedEdge e : sp.pathTo(d)) {
 				//System.out.println(e + "   ");
 				//System.out.print(idList.get(e.to()) + " to " + idList.get(e.from()) + " (" + String.format("%.2f",e.weight()) +") ");
@@ -203,24 +202,9 @@ public class ShortestPath {
 			System.out.println();
 		}
 		else {
-			System.out.printf("%d to %d         no path\n", s, d);
+			System.out.printf("%d to %d         no path exists.\n", s, d);
+			
 		}
-	}
-	
-	public static void main(String[] args) {
-		
-		Scanner scanner = new Scanner(System.in);
-		
-		System.out.print("Enter start stop: " );
-		int start = scanner.nextInt();
-		
-		System.out.print("Enter destination stop: ");
-		int destination = scanner.nextInt();
-		
-		ShortestPath sp = new ShortestPath(start, destination);
-
-		
-		
 	}
 
 }

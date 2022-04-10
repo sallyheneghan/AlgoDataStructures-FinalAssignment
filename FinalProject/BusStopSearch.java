@@ -46,13 +46,8 @@ public class BusStopSearch {
 				}
 
 			}
-		
-
-			//Add the current stopName to the ArrayList<String> stopNames
+			//Adds the current stopName to the ArrayList<String> stopNames
 			stopNames.add(i + " " + stopName);
-			
-
-
 
 		}
 
@@ -72,23 +67,24 @@ public class BusStopSearch {
 	
 	
 
-
-
-	public void checkForBusStop(String stopNameInput, ArrayList<String> busStrings,
+	public boolean checkForBusStop(String stopNameInput, ArrayList<String> busStrings,
 			ArrayList<String> stopNames, TST<Integer> busTST, ArrayList<String> returnedStops){
 
 
-		System.out.println("keysWithPrefix(" + stopNameInput + "):");
+		int i = 0;
 		for (String t : busTST.keysWithPrefix(stopNameInput)) {
-			System.out.println(t);
 			returnedStops.add(t);
+			i++;
 	
 		}
-
-
-
-
+		if(i > 0) {
+			return true;
+		}
+		
+		return false;
 	}
+	
+	
 	
 	public void printStopInfo(ArrayList<String> busStrings, ArrayList<String> stopNames, ArrayList<String> returnedStops) {
 		
@@ -106,29 +102,5 @@ public class BusStopSearch {
 		}
 		
 	}
-	
-	
-	
-
-
-	public static void main(String[] args) {
-		ArrayList<String> busStrings = new ArrayList<String>();
-		ArrayList<String> stopNames = new ArrayList<String>();
-		ArrayList<String> returnedStops = new ArrayList<String>();
-
-		TST<Integer> busTST = new TST<Integer>(); 
-
-		BusStopSearch bss = new BusStopSearch(busStrings, stopNames, busTST);
-
-		Scanner scanner = new Scanner(System.in);
-		System.out.print("Enter stop name: ");
-		String stopNameInput = scanner.nextLine();
-		
-		bss.checkForBusStop(stopNameInput, stopNames, busStrings, busTST, returnedStops);
-		bss.printStopInfo(busStrings, stopNames, returnedStops);
-		
-	}
-	
-
 	
 }
