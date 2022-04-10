@@ -1,1 +1,25 @@
 
+Algorithms & Data Structures: Final Project
+Bus Management System
+Design Document
+
+1.	Finding shortest paths between 2 bus stops (as input by the user), returning the list of stops en route as well as the associated “cost”. 
+This majority of this section is implemented in the ShortestPath.java class, and makes use of: DirectedEdge.java, EdgeWeightedDigraph.java, IndexMinPQ.java, DijkstraSP.java
+-	The most important decision when deciding how to find the shortest path between two specific bus stops is deciding which algorithm to use to most effectively implement this. 
+-	Although initially, I thought I might use Floyd Warshall to do this as I knew this would be able to find the shortest path between any stops, I realised that this was not the most optimal approach in terms of both time and space, as Floyd Warshall would check all paths between all stops before returning the shortest path available, which is not an effective or optimal way when searching for the shortest path between two specific stops, as it would take a considerable amount of time to do this, and also a considerable amount of space to store the information on all the paths that exist in the graph. 
+-	Dijkstra’s Shortest Path Algorithm was chosen instead as this appears to be the most optimal approach to finding the shortest path between two points in terms of space and time, when the input is considered.
+-	Once a starting point and destination point are entered, Dijkstra, from the graph of the stops and trips created, can very quickly search for the shortest path possible between these points, disregarding the stops and trips that are not at all relevant to the current path, making this an optimal approach.
+-	Further Dijkstra’s requires that all costs of edges be positive, and as this was stated in the project specification, it was clear that Dijkstra was the most appropriate algorithm.  
+-	The implementation of this algorithm to find the shortest path was done using classes (DirectedEdge.java, EdgeWeightedDigraph.java, IndexMinPQ.java, DijkstraSP.java) by Sedgewick and Wayne, accompanying their Algorithms, 4th Edition textbook. This is an effective way to both store the input from the stops.txt, stop_times.txt and transfers.txt files into an appropriate graph structure, and make use of priority queues to then find the shortest path via Dijkstra’s Shortest Path algorithm. 
+
+2.	Searching for a bus stop by full name or by the first few characters in the name, using a ternary search tree (TST), returning the full stop information for each stop matching the search criteria (which can be zero, one or more stops) 
+
+This majority of this section is implemented in the BusStopSearch.java class, and makes use of: TST.java and Queue.java
+-	The use of a TST to find a bus stop by name is the most effective approach as it will allow users to search for a bus stop by full name or by entering the first few characters of the name. 
+-	This implementation makes use of a TST makes use of the TST.java class and Queue.java class, both by Sedgewick and Wayne, to build a ternary search tree from an input of the names of all the bus stops in the system (ArrayList<String> stopNames).
+-	ArrayLists are used frequently throughout this project as it seems one of the most effective ways to store the relevant general information read in from the input files, or more specific information (such as the names of each stop.), when we are not sure of the exact length of the input files, or do not know how long an array will need to be. 
+
+3.	Searching for all trips with a given arrival time, returning full details of all trips matching the criteria (zero, one or more), sorted by trip id 
+This section is implemented in the TripSearch.java class. 
+-	In order to effectively implement this part of the project, the arrival times would need to be isolated from the strings in which they are read from the input file. The most effective way to do this is read each line from the input file, creating a string array of each line, and from this string array, taking the arrival time and adding this to an ArrayList. 
+-	The decision to use insertion sort to sort the trips with the relevant arrival times according to their trip id, is based on the fact that we could expect the number of trips with the exact arrival time to be fairly small – and insertion sort is a good sorting method to use on smaller inputs. Further, insertion sort is a good option to use if the list is almost ordered, which, upon examining the stop_times.txt files, and testing the program using multiple different arrival times, appears to frequently be the case with this implementation of the program. 
